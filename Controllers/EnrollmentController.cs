@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using MvcTest.Data;
 using MvcTest.Models;
@@ -23,6 +24,13 @@ namespace MvcTest.Controllers
     public ActionResult Index()
     {
       var enrollments = repositoryContext.EnrollmentRepository.Get().ToList();
+
+      foreach (var enrollment in enrollments)
+      {
+        enrollment.Subject = repositoryContext.SubjectRepository.GetByID(enrollment.SubjectID);
+        enrollment.Student = repositoryContext.StudentRepository.GetByID(enrollment.StudentID);
+      }
+
       return View(enrollments);
     }
 
@@ -36,9 +44,8 @@ namespace MvcTest.Controllers
     // GET: Enrollment/Create
     public ActionResult Create()
     {
-    //   ViewBag.GradeValue = new SelectList(unitOfWork.GradeRepository.Get(), "Value", "Value");
-    //   ViewBag.StudentID = new SelectList(unitOfWork.StudentRepository.Get(), "ID", "Name");
-    //   ViewBag.SubjectID = new SelectList(unitOfWork.SubjectRepository.Get(), "ID", "Name");
+      ViewBag.StudentID = new SelectList(repositoryContext.StudentRepository.Get(), "ID", "Name");
+      ViewBag.SubjectID = new SelectList(repositoryContext.SubjectRepository.Get(), "ID", "Name");
       return View();
     }
 
@@ -54,8 +61,8 @@ namespace MvcTest.Controllers
         return RedirectToAction("Index");
       }
 
-    //   ViewBag.StudentID = new SelectList(repositoryContext.StudentRepository.Get(), "ID", "Name");
-    //   ViewBag.SubjectID = new SelectList(repositoryContext.SubjectRepository.Get(), "ID", "Name");
+      ViewBag.StudentID = new SelectList(repositoryContext.StudentRepository.Get(), "ID", "Name");
+      ViewBag.SubjectID = new SelectList(repositoryContext.SubjectRepository.Get(), "ID", "Name");
       return View(enrollment);
     }
 
@@ -64,9 +71,8 @@ namespace MvcTest.Controllers
     {
       Enrollment enrollment = repositoryContext.EnrollmentRepository.GetByID(id);
 
-    //   ViewBag.GradeValue = new SelectList(unitOfWork.GradeRepository.Get(), "Value", "Value");
-    //   ViewBag.StudentID = new SelectList(unitOfWork.StudentRepository.Get(), "ID", "Name");
-    //   ViewBag.SubjectID = new SelectList(unitOfWork.SubjectRepository.Get(), "ID", "Name");
+      ViewBag.StudentID = new SelectList(repositoryContext.StudentRepository.Get(), "ID", "Name");
+      ViewBag.SubjectID = new SelectList(repositoryContext.SubjectRepository.Get(), "ID", "Name");
       return View(enrollment);
     }
 
@@ -81,9 +87,9 @@ namespace MvcTest.Controllers
         repositoryContext.Save();
         return RedirectToAction("Index");
       }
-    //   ViewBag.GradeValue = new SelectList(unitOfWork.GradeRepository.Get(), "Value", "Value");
-    //   ViewBag.StudentID = new SelectList(unitOfWork.StudentRepository.Get(), "ID", "Name");
-    //   ViewBag.SubjectID = new SelectList(unitOfWork.SubjectRepository.Get(), "ID", "Name");
+  
+      ViewBag.StudentID = new SelectList(repositoryContext.StudentRepository.Get(), "ID", "Name");
+      ViewBag.SubjectID = new SelectList(repositoryContext.SubjectRepository.Get(), "ID", "Name");
       return View(enrollment);
     }
 

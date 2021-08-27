@@ -23,14 +23,25 @@ namespace MagniFinanceExercise.Controllers
     // GET: Subject
     public ActionResult Index()
     {
-      var subjects = repositoryContext.SubjectRepository.Get();
-      return View(subjects.ToList());
+      var subjects = repositoryContext.SubjectRepository
+      .Get()
+      .ToList();
+
+      foreach (var subject in subjects)
+      {
+        subject.Teacher = repositoryContext.TeacherRepository.GetByID(subject.TeacherID);
+        subject.Course = repositoryContext.CourseRepository.GetByID(subject.CourseID);
+      }
+
+      return View(subjects);
     }
 
     // GET: Subject/Details/5
     public ActionResult Details(int? id)
     {
       Subject subject = repositoryContext.SubjectRepository.GetByID(id);
+      subject.Teacher = repositoryContext.TeacherRepository.GetByID(subject.TeacherID);
+      subject.Course = repositoryContext.CourseRepository.GetByID(subject.CourseID);
 
       return View(subject);
     }
@@ -64,6 +75,8 @@ namespace MagniFinanceExercise.Controllers
     public ActionResult Edit(int? id)
     {
       Subject subject = repositoryContext.SubjectRepository.GetByID(id);
+      subject.Teacher = repositoryContext.TeacherRepository.GetByID(subject.TeacherID);
+      subject.Course = repositoryContext.CourseRepository.GetByID(subject.CourseID);
 
       ViewBag.CourseID = new SelectList(repositoryContext.CourseRepository.Get(), "ID", "Name", subject.CourseID);
       ViewBag.TeacherID = new SelectList(repositoryContext.TeacherRepository.Get(), "ID", "Name", subject.TeacherID);
@@ -104,42 +117,6 @@ namespace MagniFinanceExercise.Controllers
       repositoryContext.Save();
       return RedirectToAction("Index");
     }
-
-    // public ActionResult Statistics()
-    // {
-    //   var subjects = repositoryContext.SubjectRepository.Get().ToList();
-    //   List<SubjectStatistic> studentsStatistics = new List<SubjectStatistic>();
-    //   subjects.ForEach(s =>
-    //   {
-    //     SubjectStatistic subjectStatistic = new SubjectStatistic();
-    //     subjectStatistic.Name = repositoryContext.SubjectRepository.GetByID(s.ID).Name;
-    //     subjectStatistic.ID = s.Id;
-    //     var enrollements = repositoryContext.EnrollmentRepository
-    //           .Get()
-    //           .Where(e => e.SubjectID == s.Id)
-    //           .ToList();
-
-    //     enrollements.ForEach(e =>
-    //           {
-    //         subjectStatistic.Students.Add(new StudentGrade
-    //         {
-    //           Name = repositoryContext.StudentRepository.GetByID(e.StudentID).Name,
-    //           Grade = e.GradeValue
-    //         });
-    //       });
-
-    //     studentsStatistics.Add(subjectStatistic);
-    //   });
-
-    //   return Json(studentsStatistics, JsonRequestBehavior.AllowGet);
-    // }
-
-    // public ActionResult GetTeacherOfSubject(int? id)
-    // {
-    //   Subject subject = repositoryContext.SubjectRepository.GetByID(id);
-
-    //   return Json(subject.Teacher, JsonRequestBehavior.AllowGet);
-    // }
 
     protected override void Dispose(bool disposing)
     {

@@ -57,8 +57,8 @@ namespace MvcTest.Data
 
       var enrollments = new List<Enrollment>
             {
-                new Enrollment { StudentID=1, SubjectID=1, GradeValue=12 },
-                new Enrollment { StudentID=1, SubjectID=2, GradeValue=14 },
+                new Enrollment {Id = 1, StudentID=1, SubjectID=1, GradeValue=8 },
+                new Enrollment {Id = 2, StudentID=1, SubjectID=2, GradeValue=9 },
             };
       enrollments.ForEach(s => context.Enrollments.Add(s));
       context.SaveChanges();
