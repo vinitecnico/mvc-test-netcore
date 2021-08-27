@@ -23,8 +23,8 @@ namespace MvcTest.Controllers
 
     public IActionResult Index()
     {
-      var books = _context.Books.ToList();
-      return View(books);
+      // var books = _context.Books.ToList();
+      return View();
     }
 
     [HttpGet]
@@ -34,7 +34,7 @@ namespace MvcTest.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Book contact)
+    public async Task<IActionResult> Create(string tes)
     {
       // validate that our model meets the requirement
       if (ModelState.IsValid)
@@ -42,7 +42,7 @@ namespace MvcTest.Controllers
         try
         {
           // update the ef core context in memory 
-          _context.Books.Add(contact);
+          // _context.Books.Add(contact);
 
           // sync the changes of ef code in memory with the database
           await _context.SaveChangesAsync();
@@ -58,7 +58,7 @@ namespace MvcTest.Controllers
       ModelState.AddModelError(string.Empty, $"Something went wrong, invalid model");
 
       // We return the object back to view
-      return View(contact);
+      return View(tes);
     }
 
     public IActionResult Privacy()
