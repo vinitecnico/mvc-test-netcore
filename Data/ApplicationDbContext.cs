@@ -5,11 +5,11 @@ namespace MvcTest.Data
 {
   public class ApplicationDbContext : DbContext
   {
-    public DbSet<Student> Student { get; set; }
-    public DbSet<Teacher> Teacher { get; set; }
-    public DbSet<Enrollment> Enrollment { get; set; }
-    public DbSet<Subject> Subject { get; set; }
-    public DbSet<Course> Course { get; set; }
+    public DbSet<Student> Students { get; set; }
+    public DbSet<Enrollment> Enrollments { get; set; }
+    public DbSet<Course> Courses { get; set; }
+    public DbSet<Subject> Subjects { get; set; }
+    public DbSet<Teacher> Teachers { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {

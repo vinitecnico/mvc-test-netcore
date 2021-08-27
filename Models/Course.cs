@@ -6,15 +6,15 @@ namespace MvcTest.Models
 {
   public class Course
   {
+    [Key]
+    [Column(Order=1)]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
-    public int CourseID { get; set; }
+    public int Id { get; set; }
 
     [StringLength(50, MinimumLength = 3)]
-    public string Title { get; set; }
-    
-    public virtual ICollection<Enrollment> Enrollments { get; set; }
+    public string Name { get; set; }
+
     public virtual ICollection<Subject> Subjects { get; set; }
-    public virtual Teacher Teacher { get; set; }
 
   }
 }

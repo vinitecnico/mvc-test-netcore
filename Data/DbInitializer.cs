@@ -12,67 +12,56 @@ namespace MvcTest.Data
     {
       context.Database.EnsureCreated();
 
-      // Look for any students.
-      if (context.Student.Any())
+      if (context.Students.Any())
       {
-        return;   // DB has been seeded
+        return;
       }
 
       var students = new List<Student>
             {
-            new Student{Name="Carson",Birthday=DateTime.Parse("2005-09-01"), EnrollmentDate = DateTime.Now},
-            new Student{Name="Meredith",Birthday=DateTime.Parse("2002-09-01"), EnrollmentDate = DateTime.Now},
-            new Student{Name="Arturo",Birthday=DateTime.Parse("2003-09-01"), EnrollmentDate = DateTime.Now},
-            new Student{Name="Gytis",Birthday=DateTime.Parse("2002-09-01"), EnrollmentDate = DateTime.Now},
-            new Student{Name="Yan",Birthday=DateTime.Parse("2002-09-01"), EnrollmentDate = DateTime.Now},
-            new Student{Name="Peggy",Birthday=DateTime.Parse("2001-09-01"), EnrollmentDate = DateTime.Now},
-            new Student{Name="Laura",Birthday=DateTime.Parse("2003-09-01"), EnrollmentDate = DateTime.Now},
-            new Student{Name="Nino",Birthday=DateTime.Parse("2005-09-01"), EnrollmentDate = DateTime.Now}
+                new Student{Id=1, Name="Student 1",DateBirth=DateTime.Parse("1989-07-30")},
+                new Student{Id=2,Name="Student 2",DateBirth=DateTime.Parse("1990-03-21")},
+                new Student{Id=3,Name="Student 3",DateBirth=DateTime.Parse("1990-06-01")},
             };
 
-      students.ForEach(s => context.Student.Add(s));
+      students.ForEach(s => context.Students.Add(s));
       context.SaveChanges();
-      
 
-      // var courses = new List<Course>
-      //       {
-      //       new Course{CourseID=1050,Title="Chemistry"},
-      //       new Course{CourseID=4022,Title="Microeconomics"},
-      //       new Course{CourseID=4041,Title="Macroeconomics"},
-      //       new Course{CourseID=1045,Title="Calculus"},
-      //       new Course{CourseID=3141,Title="Trigonometry"},
-      //       new Course{CourseID=2021,Title="Composition"},
-      //       new Course{CourseID=2042,Title="Literature"}
-      //       };
-      // var courses = new List<Course>
-      // {
-      // new Course{CourseID=1050,Title="Chemistry",Credits=3,},
-      // new Course{CourseID=4022,Title="Microeconomics",Credits=3,},
-      // new Course{CourseID=4041,Title="Macroeconomics",Credits=3,},
-      // new Course{CourseID=1045,Title="Calculus",Credits=4,},
-      // new Course{CourseID=3141,Title="Trigonometry",Credits=4,},
-      // new Course{CourseID=2021,Title="Composition",Credits=3,},
-      // new Course{CourseID=2042,Title="Literature",Credits=4,}
-      // };
-      // courses.ForEach(s => context.Courses.Add(s));
-      // context.SaveChanges();
-      // var enrollments = new List<Enrollment>
-      // {
-      // new Enrollment{StudentID=1,CourseID=1050,Grade=Grade.A},
-      // new Enrollment{StudentID=1,CourseID=4022,Grade=Grade.C},
-      // new Enrollment{StudentID=1,CourseID=4041,Grade=Grade.B},
-      // new Enrollment{StudentID=2,CourseID=1045,Grade=Grade.B},
-      // new Enrollment{StudentID=2,CourseID=3141,Grade=Grade.F},
-      // new Enrollment{StudentID=2,CourseID=2021,Grade=Grade.F},
-      // new Enrollment{StudentID=3,CourseID=1050},
-      // new Enrollment{StudentID=4,CourseID=1050,},
-      // new Enrollment{StudentID=4,CourseID=4022,Grade=Grade.F},
-      // new Enrollment{StudentID=5,CourseID=4041,Grade=Grade.C},
-      // new Enrollment{StudentID=6,CourseID=1045},
-      // new Enrollment{StudentID=7,CourseID=3141,Grade=Grade.A},
-      // };
-      // enrollments.ForEach(s => context.Enrollments.Add(s));
-      // context.SaveChanges();
+
+      var courses = new List<Course>
+            {
+                new Course{Id=1,Name="Course 1"},
+                new Course{Id=2,Name="Course 2"},
+                new Course{Id=3,Name="Course 3"}
+            };
+      courses.ForEach(s => context.Courses.Add(s));
+      context.SaveChanges();
+
+      var teachers = new List<Teacher>
+            {
+                new Teacher{Id=1,Name="Teacher 1", DateBirth=DateTime.Parse("1956-07-01"), Salary=2000},
+                new Teacher{Id=2,Name="Teacher 2", DateBirth=DateTime.Parse("1962-04-23"), Salary=1500},
+                new Teacher{Id=3,Name="Teacher 3", DateBirth=DateTime.Parse("1970-01-31"), Salary=5000}
+            };
+      teachers.ForEach(s => context.Teachers.Add(s));
+      context.SaveChanges();
+
+      var subjects = new List<Subject>
+            {
+                new Subject{Id=1 ,CourseID=1,Name="Subject 1", TeacherID=1},
+                new Subject{Id=2, CourseID=1,Name="Subject 2", TeacherID=2},
+                new Subject{Id=3, CourseID=1,Name="Subject 3", TeacherID=3}
+            };
+      subjects.ForEach(s => context.Subjects.Add(s));
+      context.SaveChanges();
+
+      var enrollments = new List<Enrollment>
+            {
+                new Enrollment { StudentID=1, SubjectID=1, GradeValue=12 },
+                new Enrollment { StudentID=1, SubjectID=2, GradeValue=14 },
+            };
+      enrollments.ForEach(s => context.Enrollments.Add(s));
+      context.SaveChanges();
     }
   }
 }

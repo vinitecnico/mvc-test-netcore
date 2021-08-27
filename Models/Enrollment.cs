@@ -1,18 +1,26 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace MvcTest.Models
 {
-    public enum Grade
-    {
-        A, B, C, D, F
-    }
+  public class Enrollment
+  {
+    [Key]
+    [Column(Order = 1)]
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    public int Id { get; set; }
 
-    public class Enrollment
-    {
-        public int EnrollmentID { get; set; }
-        public int CourseID { get; set; }
-        public int StudentID { get; set; }
-        public Grade? Grade { get; set; }
-        
-        public virtual Course Course { get; set; }
-        public virtual Student Student { get; set; }
-    }
+
+    [ForeignKey("Subject")]
+    public int SubjectID { get; set; }
+    public virtual Subject Subject { get; set; }
+
+
+    [ForeignKey("Student")]
+    public int StudentID { get; set; }
+    public virtual Student Student { get; set; }
+
+
+    public double GradeValue { get; set; }
+  }
 }
