@@ -10,7 +10,7 @@ using MvcTest.Data;
 namespace MvcTest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210827125649_Initial")]
+    [Migration("20210828164056_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

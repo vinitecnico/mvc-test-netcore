@@ -1,6 +1,6 @@
 version: '3'
 services:
-  ms-sql-server:
+  mssql-server:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     environment:
       ACCEPT_EULA: "Y"
@@ -10,5 +10,13 @@ services:
       - "1433:1433"
   book-app:
     build: .
+    environment:
+      DbServer: "mssql-server"
+      DbPort: "1433"
+      DbUser: "SA"
+      Password: "Pa55w0rd2021"
+      Database: "mcvtestDb"
     ports: 
       - "8090:80"
+    depends_on:
+      - "mssql-server"
